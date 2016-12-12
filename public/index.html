@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>post请求</title>
+  <link rel="stylesheet" href="./plugin/bootstrap.css">
+  <link rel="stylesheet" href="./plugin/jquery.fileupload.css">
+  <link rel="stylesheet" href="./plugin/jquery.fileupload-ui.css">
   <script src="./js/jquery-1.11.3.js"></script>
+
+  <script src="./plugin/bootstrap.min.js"></script>
+  <script src="./plugin/jquery.ui.widget.js"></script>
+  <script src="./plugin/jquery.iframe-transport.js"></script>
+  <script src="./plugin/jquery.fileupload.js"></script>
   <script src="./js/source.js"></script>
   <style>
       body{
@@ -25,7 +33,16 @@
 <body>
   <div>点击触发post请求</div>
   <span class="u-btn j-post">我是按钮</span>
+  <input id="fileupload" type="file" name="file" data-url="/public/url/post/manageSrc" multiple>
   <script>
+      $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo(document.body);
+            });
+        }
+    });
       //console.log(addrsArr)
       $('.j-post').on('click',function(){
         for(var i=0;i<addrsArr.length;i++){

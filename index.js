@@ -4,7 +4,7 @@
 // server.start(router.route);
 
 var resetSrc = require('./public/url/post/resetSrc');
-
+var manageSrc = require('./public/url/post/manageSrc');
 
 
 var express = require('express');
@@ -23,6 +23,15 @@ app.post('/public/url/post/resetSrc', function (req, res) {
   var a = resetSrc.add
   var temp = a(req.body)
   console.log(temp.data)
+  
+// { user: 'qg' }
+  res.json(temp);
+});
+
+app.post('/public/url/post/manageSrc', function (req, res) {
+  var a = manageSrc.gotFile
+  var temp = a(req.body)
+  console.log(temp)
   
 // { user: 'qg' }
   res.json(temp);
