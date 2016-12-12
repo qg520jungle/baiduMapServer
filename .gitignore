@@ -1,0 +1,4 @@
+.DS_Store
+/node_modules
+*.log
+/Jinja2-2.8
