@@ -36,6 +36,4 @@ function getList(list){
 
 getList(list)
 
-
-
 console.log('end!')

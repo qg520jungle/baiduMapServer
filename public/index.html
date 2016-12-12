@@ -13,9 +13,18 @@
   <script src="./plugin/jquery.iframe-transport.js"></script>
   <script src="./plugin/jquery.fileupload.js"></script>
   <script src="./js/source.js"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Di1FAQVUbVY6FvD6RIS5OdXwzmD5SFsL"></script>
+    <!-- 加载百度地图样式信息窗口 -->
+    <script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+    <!-- 加载城市列表 -->
+    <script type="text/javascript" src="http://api.map.baidu.com/library/CityList/1.2/src/CityList_min.js"></script>
   <style>
       body{
         padding: 20px;
+      }
+      .m-wrap{
+        margin: 10px;
       }
       .u-btn{
         display: inline-block;
@@ -28,14 +37,144 @@
       .u-btn:hover{
         background: #ccc;
       }
+      .u-msg-box{
+        height: 40px;
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        margin: 5px 0;
+      }
   </style>
 </head>
 <body>
-  <div>点击触发post请求</div>
-  <span class="u-btn j-post">我是按钮</span>
+  <div>初始化地图</div>
   <input id="fileupload" type="file" name="file" data-url="/public/url/post/manageSrc" multiple>
+  <div class="m-wrap">
+    <span class="u-btn j-upload">点我上传</span>
+    <div class="u-msg-box j-upload-msg"></div>
+  </div>
+  <div class="m-wrap">
+    <span class="u-btn j-init">初始化地址</span>
+    <div class="u-msg-box j-init-msg"></div>
+  </div>
+  
   <script>
-      $('#fileupload').fileupload({
+  //上传文件
+    $('.j-upload').on('click',function(){
+      $.ajax({
+        url:'/public/url/post/manageSrc',
+        type: 'POST',
+        dataType: 'json',
+        data: {},
+        success: function(res){
+          if(res.RESULT == 1){
+            $('.j-upload-msg').html('xlsx 文件上传成功！')
+
+          }else if(res.RESULT == 0){
+            $('.j-upload-msg').html('upload error ~~~')
+          }else{
+            $('.j-upload-msg').html('code is error !!!')
+          }
+          
+        }
+      })
+      
+    })
+    var doInit = false;
+    //初始化地址
+    $('.j-init').on('click',function(){
+      doInit = false;
+      addrChange()
+      var loading = setInterval(function(){
+        if(doInit){
+        //获取addrsArr 中地址重复复的是指地址为相加的
+        //var output = judgeTheSame();
+        clearInterval(loading)
+        var str = JSON.stringify(addrsArr)
+          $.ajax({
+            url: '/public/url/post/resetSrc',
+            type: 'POST',
+            dataType: "json",
+            data: {"DATA":str},
+            success: function(res){
+              console.log('成功传过去了')
+              $('.j-init-msg').html('地图查看器地址初始化成功！')
+              console.log(res)
+            },
+            error:function(err){
+              console.log(err)
+            },
+            complete: function(res){
+              console.log(res)
+              console.log('完成')
+            }
+          })
+        }
+      },400)
+
+
+      
+      
+      
+      
+    })
+  //批量地址解析
+  function addrChange(){
+    var data_info = []
+    var myGeo = new BMap.Geocoder();
+    var i = 0;
+    var time = setInterval(function(){
+      if(i < addrsArr.length){
+        addrsArr[i].point = getPoint(myGeo,addrsArr[i].search)
+        console.log(addrsArr)
+        i++
+      }else{
+        doInit = true
+      }
+    },400);
+  }
+  function getPoint(myGeo,search){
+    var _point = []
+    console.log(search)
+    myGeo.getPoint(search, function(point){
+      console.log(point)
+        if (point) {
+          _point.push(point.lng)
+          _point.push(point.lat)
+          
+        }else{
+          alert("您选择地址没有解析到结果!");
+        }
+      }, "杭州市");
+    return _point
+  }
+ 
+
+  
+
+  function judgeTheSame(){
+    var output = []
+    var temp = []
+    temp.length = addrsArr.length
+    for(var i=0;i<addrsArr.length;i++){
+      var str = '<div>公司名称:'+addrsArr[i].show+'</div>'
+      temp[i] = str
+    }
+    for(var i=0;i<addrsArr.length;i++){
+      var _point = addrsArr[i].point
+      var add = temp[i]
+      for(var j=0;j<addrsArr.length;j++){
+        if(i!=j&&_point[0] == addrsArr[j].point[0]&&_point[1] == addrsArr[j].point[1]){
+          add += temp[j]
+        }
+      }
+      output.push(add)
+    }
+    return output
+  }
+    
+      //console.log(addrsArr)
+      
+        $('#fileupload').fileupload({
         dataType: 'json',
         done: function (e, data) {
             $.each(data.result.files, function (index, file) {
@@ -43,33 +182,6 @@
             });
         }
     });
-      //console.log(addrsArr)
-      $('.j-post').on('click',function(){
-        for(var i=0;i<addrsArr.length;i++){
-          addrsArr[i].point.push('lat'+i)
-          addrsArr[i].point.push('lng'+i)
-        }
-        console.log('以下post')
-        //console.log(addrsArr)
-        //{"DATA":JSON.stringify(addrsArr)}
-        $.ajax({
-          url: '/public/url/post/resetSrc',
-          type: 'POST',
-          dataType: "json",
-          data: {"data":"1"},
-          success: function(res){
-            console.log('成功传过去了')
-            console.log(res)
-          },
-          error:function(err){
-            console.log(err)
-          },
-          complete: function(res){
-            console.log(res)
-            console.log('完成')
-          }
-        })
-      })
   </script>
 </body>
 </html>
