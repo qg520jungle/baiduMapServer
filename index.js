@@ -3,13 +3,29 @@
 
 // server.start(router.route);
 
-var resetSrc = require('./url/post/resetSrc');
+var resetSrc = require('./public/url/post/resetSrc');
+
+
 
 var express = require('express');
+var bodyParser = require('body-parser')
+
+var router = express.Router();
 var app = express();
 
-app.get('/a', function (req, res) {
-  res.send(resetSrc.add(req, res));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(express.static('public'));
+router.all('/', function (req, res) {
+    res.sendFile('index.html')
+});
+app.post('/public/url/post/resetSrc', function (req, res) {
+  var a = resetSrc.add
+  var temp = a(req.body)
+  console.log(temp.data)
+  
+// { user: 'qg' }
+  res.json(temp);
 });
 
 var server = app.listen(3000, function () {
