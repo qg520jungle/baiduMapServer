@@ -44,7 +44,7 @@
 </head>
 <body>
   <div>初始化地图</div>
-  <input id="file-1" class="file" type="file" multiple data-min-file-count="1">
+  <input id="xlsx-file" class="file" type="file" name="ADDRSARR" multiple data-min-file-count="1">
   <div class="m-wrap">
     <span class="u-btn j-upload">点我上传</span>
     <div class="u-msg-box j-upload-msg"></div>
@@ -52,6 +52,9 @@
   <div class="m-wrap">
     <span class="u-btn j-init">初始化地址</span>
     <div class="u-msg-box j-init-msg"></div>
+  </div>
+  <div class="m-wrap">
+    <a href="/public/url/post/downSrc" class="u-btn j-down">下载源文件</a>
   </div>
   
   <script>
@@ -79,16 +82,20 @@
   }
 
   //上传文件 插件
-    $("#file-1").fileinput({
-        uploadUrl: '#', // you must set a valid URL here else you will get an error
-        allowedFileExtensions : ['xlsx'],
+    $("#xlsx-file").fileinput({
+        uploadUrl: '/public/url/post/uploadxlsx', // you must set a valid URL here else you will get an error
+        allowedFileExtensions : ['xlsx','jpg','txt'],
         overwriteInitial: false,
         maxFileSize: 1000,
-        maxFilesNum: 10,
+        maxFilesNum: 1,
+        maxFileCount: 1,
         //allowedFileTypes: ['image', 'video', 'flash'],
         slugCallback: function(filename) {
             return filename.replace('(', '_').replace(']', '_');
         }
+  }).on('fileloaded', function(event, file, previewId, index, reader) {
+    console.log("fileloaded");
+
   });
   //xlsx --> js 文件
     $('.j-upload').on('click',function(){
@@ -118,6 +125,7 @@
     //初始化地址
     $('.j-init').on('click',function(){
       avoidReClick($('.j-upload'))
+      avoidReClick($('.j-down'))
       avoidReClick($('.j-init'))
       doInit = false;
       addrChange()
@@ -138,6 +146,7 @@
               console.log(res)
               resetClick($('.j-upload'))
               resetClick($('.j-init'))
+              resetClick($('.j-down'))
             },
             error:function(err){
               console.log(err)
@@ -149,13 +158,30 @@
           })
         }
       },400)
-
-
-      
-      
-      
-      
     })
+  //点击下载源文件
+/* $('.j-down').on('click',function(){
+    avoidReClick($('.j-down'))
+    $.ajax({
+      url: '/public/url/post/downSrc',
+      type: 'POST',
+      dataType: "json",
+      data: {},
+      success: function(res){
+        console.log('成功传过去了')
+        $('.j-down-msg').html('地图查看器地址下载成功！')
+        console.log(res)
+        resetClick($('.j-down'))
+      },
+      error:function(err){
+        console.log(err)
+      },
+      complete: function(res){
+        console.log(res)
+        console.log('完成')
+      }
+    })
+})*/
   //批量地址解析
   function addrChange(){
     var data_info = []
