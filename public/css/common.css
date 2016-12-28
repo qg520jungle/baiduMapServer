@@ -73,7 +73,7 @@ input:-moz-placeholder {
 }
 .s-logo {
   font-size: 36px;
-  color: #3399cc;
+  color: #3388ff;
 }
 .s-tips,
 .s-tips:hover {
@@ -427,4 +427,69 @@ input:-moz-placeholder {
 }
 .m-option-handle .u-items .item {
   float: left;
+}
+.m-wrap{
+  margin: 10px;
+}
+.u-btn{
+  display: inline-block;
+  font-size: 14px;
+  padding: 3px 5px;
+  border: 1px solid #666;
+  background: #efefef;
+  cursor: pointer;
+}
+.u-btn:hover{
+  background: #ccc;
+}
+.u-msg-box{
+  height: 40px;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  margin: 5px 0;
+}
+.f-dn,.f-hd{
+  display: none;
+}
+.btn-bd2{
+  color: #fff;
+  background-color: #38f;
+  border-color: #2e6da4;
+}
+.btn-bd2:hover{
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+.s-foot{
+  color: #808080;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.4;
+}
+.s-title{
+  font-weight: 700;
+  color: #323232;
+  font-size: 16px;
+}
+.s-info{
+  color: #808080;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.f-ml20{
+  margin-left: 30px;
+}
+.g-foot{
+  margin-top: 10px;
+}
+.m-crb{
+  height: 40px;
+
+}
+.m-crb .s-title{
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  vertical-align: text-top;
 }
