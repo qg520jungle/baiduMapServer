@@ -461,9 +461,10 @@ input:-moz-placeholder {
   background-color: #337ab7;
   border-color: #2e6da4;
 }
-.btn-dis,.btn-dis:hover{
+.btn-dis,.btn-dis:hover,.btn-dis:focus{
   background: #ccc;
   cursor: not-allowed;
+  text-decoration: none;
 }
 .s-foot{
   color: #808080;
