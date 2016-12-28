@@ -1,0 +1,81 @@
+<!-- 嵌套table start -->
+    <!-- <div class="output__table">
+      <table id="table3" data-toggle="table">
+        <thead>
+          <tr>
+            <th data-field="ROWNO">序号</th>
+            <th data-field="VIN_CHAR">VIN码</th>
+            <th data-field="CAR_TYPE">车型</th>
+            <th data-field="PUTIN_DATE">入库日期</th>
+            <th data-field="MAINTENANCE_TIMES">维护次数</th>
+            <th data-formatter="detail" data-field="EACH_TIME_DETAIL">明细</th>            
+          </tr>
+        </thead>  
+      </table>
+    </div> -->
+    <!-- 嵌套table end -->
+
+    //嵌套table 开始
+   /* function detail(v, r, i) {
+      //console.log(v)
+      console.log(r)
+      //console.log(i)
+      var s='';
+      s='<table id="dtable'+i+'"  data-toggle="table"> <thead><tr>';
+      s+='<th data-field="TIMES_NO">次数</th>'
+      s+='<th data-field="MAINTENANCE_DATE">维修日期</th>'
+      s+='<th data-field="MAINTENANCE_TYPE">维修类型</th>'
+      s+='<th data-field="CHECK_IMG">图片</th>'
+      s+='</tr></thead>'
+      s+='</table>';
+      return s
+    }
+    //初始化table
+    $('#table3').bootstrapTable({ //
+        url: API_URL + 'CBMDlr/GetDlrCarBatteryCheckDetail', //数据接口
+        responseHandler: function(res) { //初始处理数据结构totle:为数据总条数
+            return {
+              "total": res.TOTAL_COUNT,
+              "rows": res.DATA
+            }
+        },
+        queryParams: exchangeParams, //添加接口参数
+        idField: "id",
+        pagination: true, //以下添加分页
+        pageNumber: 1,
+        pageSize: 10,
+        pageList: "[10]",
+        sidePagination: "server", //以上添加分页
+        uniqueId: "ROWNO",
+        onLoadSuccess: function(res) { //数据加载后计算iframe高度
+            //console.log("res")
+            //console.log(res)
+            //console.log(detail)
+            //数据加载结束后 重新初始化次级table
+            for(var i=0;i<res.rows.length;i++){
+              $('#dtable'+i).bootstrapTable({
+                data: res.rows[i].EACH_TIME_DETAIL
+              })
+            }
+            
+            var iframe = parent.document.getElementById('iframe1')
+                //alert(iframe)
+            //console.log(iframe)
+            $(iframe).height(getHeightFromIframe(iframe));
+            // IE8 下该事件只触发了一次
+            if (iframe.attachEvent) {
+                iframe.attachEvent("onload", function() {
+                    //alert('onload')
+                    $(iframe).height(getHeightFromIframe(iframe));
+                });
+            } else {
+                iframe.onload = function() {
+                    //console.log('onload')
+                    $(iframe).css("min-height", "430px");
+                    $(iframe).height(getHeightFromIframe(iframe));
+                };
+            }
+        }
+
+    });*/
+     //嵌套table 结束

@@ -2,3 +2,4 @@
 /node_modules
 *.log
 /Jinja2-2.8
+*.zip

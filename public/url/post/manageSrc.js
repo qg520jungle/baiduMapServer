@@ -5,9 +5,10 @@ var fs = require("fs")
 console.log(data.toString());*/
 var xlsx = require("node-xlsx");
 var excelName = 'addrs.xlsx'
-var list = xlsx.parse('./public/data/'+excelName)
 //从xlsx中获得数据
-function getList(list){
+function getList(){
+
+	var list = xlsx.parse('./public/data/'+excelName)
 	var addrs = list[0].data
 	var addrsArr = []
 	for(var i=1;i<addrs.length;i++){
@@ -44,7 +45,7 @@ function writeSource(str) {
  
 
 var manageSrc = function(){
-	var str = getList(list)
+	var str = getList()
 	var res = writeSource(str)
 	return {
 			"RESULT":res?'1':'0',

@@ -5,32 +5,58 @@
 
 var resetSrc = require('./public/url/post/resetSrc');
 var manageSrc = require('./public/url/post/manageSrc');
-var xlsx = require('./public/url/post/uploadxlsx');
+//var xlsx = require('./public/url/post/uploadxlsx');
 
 
 
 var express = require('express');
 var bodyParser = require('body-parser')
 
+var multer  = require('multer')
+var upload = multer({ dest: './public/data/' })
+var type = upload.single('recfile')
+var fs = require("fs")
 var router = express.Router();
 var app = express();
 
+//app.set('view engine', 'jade');
+//app.engine('html', require('ejs').renderFile);
+//app.set('view engine', 'jshtml');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 router.all('/', function (req, res) {
     res.sendFile('index.html')
 });
-//xlsx 文件导入 
-app.post('/public/url/post/uploadxlsx', function (req, res) {
-  console.log(req.files)
-  var temp = xlsx.xlsxFile(req.files)
-  res.json(temp);
+// router.get('/download.html', function(req, res) {
+//     res.redirect('download.html');
+// });
+//xlsx 文件导入 upload.single('avatar'), function (req, res, next) {
+  // req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
+//})
+app.post('/public/url/post/uploadxlsx',type, function (req, res,next) {
+  console.log(req.file)
+  //var temp = xlsx.xlsxFile(req.file)
+  var tmp_path = req.file.path;
+  var excelName = 'addrs.xlsx';
+  var target_path = './public/data/' + excelName||req.file.originalname;
+  var src = fs.createReadStream(tmp_path);
+  var dest = fs.createWriteStream(target_path);
+	
+	src.pipe(dest); 
+	fs.unlink(tmp_path);
+	   src.on('end', function() { console.log('complete');});
+
+	   src.on('error', function(err) { console.log('error'); });
+ res .json({
+			"RESULT":1,
+			"MESSAGE":'上传成功！'
+		});
 });
 
 // 文件一次处理
 app.post('/public/url/post/resetSrc', function (req, res) {
-  
   var temp = resetSrc.restFile(req.body)
   res.json(temp);
 });
