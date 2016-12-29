@@ -1,12 +1,12 @@
 {
-  "name": "2ndcar",
+  "name": "baiduMap",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "crs0910 <crs0910@icloud.com> (https://github.com/qusiba)",
+  "author": "qg520jungle <bothqia@126.com> (https://github.com/qg520jungle)",
   "license": "MIT",
   "devDependencies": {
     "browser-sync": "^2.11.2",
