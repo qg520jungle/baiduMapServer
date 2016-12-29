@@ -33,7 +33,7 @@
       </div>
       <div class="m-wrap">
         <a href="/public/url/post/downSrc" class="u-btn btn-bd2 j-down">下载源文件</a>
-        <a href="javascript:void(0);" class="u-btn btn-dis">baiduMap</a>
+        <a href="javascript:void(0);" class="u-btn btn-bd2 j-goMap">baiduMap</a>
       </div>
       <div class="m-wrap ">
         <p class="s-info">说明: 点击 <a href="###">初始化地址</a> 按钮 获得成功的提示信息后</p>
@@ -79,7 +79,9 @@
   function resetClick($this) {
     $this.next('.j-fade').remove()
   }
-
+$('.j-goMap').on('click',function(){
+  window.location.href= '/baiduMap.html'
+})
 
 
     var doInit = false;

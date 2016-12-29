@@ -1,12 +1,12 @@
 {
-  "name": "2ndcar",
+  "name": "baiduMapServer",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "crs0910 <crs0910@icloud.com> (https://github.com/qusiba)",
+  "author": "qg520jungle <bothqia@126.com.com> (https://github.com/qg520jungle)",
   "license": "MIT",
   "devDependencies": {
     "browser-sync": "^2.11.2",
@@ -19,6 +19,9 @@
   },
   "dependencies": {
     "ejs": "^2.5.5",
-    "multer": "^1.2.1"
+    "multer": "^1.2.1",
+    "body-parser": "1.15.2",
+    "express": "4.14.0",
+    "node-xlsx": "0.7.4"
   }
 }
