@@ -319,6 +319,9 @@ input:-moz-placeholder {
 .f-tr {
   text-align: right;
 }
+.f-btn{
+  display: inline-block;
+}
 .g-head {
   width: 1200px;
   margin: 0 auto;
@@ -430,6 +433,7 @@ input:-moz-placeholder {
 }
 .m-wrap{
   margin: 10px;
+  font-size: 0;
 }
 .u-btn{
   display: inline-block;
@@ -447,6 +451,7 @@ input:-moz-placeholder {
   border: 1px solid #ccc;
   padding: 5px 10px;
   margin: 5px 0;
+  font-size: 14px;
 }
 .u-tt-link{
   font-size: 16px;
@@ -462,6 +467,7 @@ input:-moz-placeholder {
   color: #fff;
   background-color: #38f;
   border-color: #2e6da4;
+  margin-right: 10px;
 }
 .btn-bd2:hover{
   color: #fff;

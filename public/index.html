@@ -11,6 +11,7 @@
   <script src="./plugin/fileinput_locale_zh.js" type="text/javascript"></script>
   <script src="./plugin/bootstrap.min.js"></script>
   <script src="./js/source.js"></script>
+  <script src="./js/common.js"></script>
   <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Di1FAQVUbVY6FvD6RIS5OdXwzmD5SFsL"></script>
     <!-- 加载百度地图样式信息窗口 -->
     <script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
@@ -33,22 +34,15 @@
     <div class="m-main-box">
       <input id="xlsx-file" class="file" type="file" name="recfile" data-min-file-count="1">
       <div class="m-wrap">
-        <span class="u-btn btn-bd2 j-upload">预处理xlsx文件</span>
+        <span class="f-btn"><span class="u-btn btn-bd2 j-upload">预处理xlsx文件</span></span>
         <div class="u-msg-box j-upload-msg"></div>
-      </div>
-      <div class="m-wrap f-dn">
-        <span class="u-btn j-init">初始化地址</span>
-        <div class="u-msg-box j-init-msg"></div>
-      </div>
-      <div class="m-wrap f-dn">
-        <a href="/public/url/post/downSrc" class="u-btn j-down">下载源文件</a>
       </div>
       <div class="m-wrap ">
         <p class="s-info">说明: 点击 <a href="###">选择文件</a> 按钮或拖拽 xlsx 文件到拖拽区域</p>
         <div class="f-ml20">
-          <p class="s-info">提交所需处理的批量地址文件</p>
+          <p class="s-info">提交所需处理的批量地址文件 <a href="/public/url/post/downMould" class="s-link">模板下载</a></p>
           <p class="s-info">xlsx 文件格式如下</p>
-          <img src="" alt="">
+          <img src="./img/demo.png" alt="">
           <p class="s-info">若格式非法 将无法获得正确结果</p>
         </div>
       </div>
@@ -67,29 +61,6 @@
     <p class="s-foot">bothqia@126.com 若有 <b>疑问</b> 或 <b>建议</b> 可与作者联系 </p>
   </div>
   <script>
-  //杜绝重复点击
-  function avoidReClick($this) {
-    var str = '';
-    str += '<div class="j-fade"></div>'
-    $this.parent().css({
-      'position' : 'relative'
-    })
-    $this.after(str)
-    $this.next('.j-fade').css({
-      'position': 'absolute',
-      'zIndex': '10',
-      'width': $this.width()+12,
-      'height': $this.height()+8,
-      'top': '0',
-      'left': '0',
-      'background': 'rgba(0, 0, 0,.1)'
-    })
-  }
-  //恢复点击
-  function resetClick($this) {
-    $this.next('.j-fade').remove()
-  }
-
   //上传文件 插件
     $("#xlsx-file").fileinput({
         uploadUrl: '/public/url/post/uploadxlsx', // you must set a valid URL here else you will get an error
@@ -123,14 +94,6 @@
           if(res.RESULT == 1){
             $('.j-upload-msg').html('xlsx 文件上传成功！')
             window.location.href= '/download.html'
-            // $.ajax({
-            //   url: '/download.html',
-            //   type: 'GET',
-            //   dataType: 'json',
-            //   data: {},
-            // })
-            
-
           }else if(res.RESULT == 0){
             $('.j-upload-msg').html('upload error ~~~')
           }else{
@@ -142,122 +105,6 @@
       })
       
     })
-    var doInit = false;
-    //初始化地址
-    $('.j-init').on('click',function(){
-      avoidReClick($('.j-upload'))
-      avoidReClick($('.j-down'))
-      avoidReClick($('.j-init'))
-      doInit = false;
-      addrChange()
-      var loading = setInterval(function(){
-        if(doInit){
-        //获取addrsArr 中地址重复复的是指地址为相加的
-        //var output = judgeTheSame();
-        clearInterval(loading)
-        var str = JSON.stringify(addrsArr)
-          $.ajax({
-            url: '/public/url/post/resetSrc',
-            type: 'POST',
-            dataType: "json",
-            data: {"DATA":str},
-            success: function(res){
-              console.log('成功传过去了')
-              $('.j-init-msg').html('地图查看器地址初始化成功！')
-              console.log(res)
-              resetClick($('.j-upload'))
-              resetClick($('.j-init'))
-              resetClick($('.j-down'))
-            },
-            error:function(err){
-              console.log(err)
-            },
-            complete: function(res){
-              console.log(res)
-              console.log('完成')
-            }
-          })
-        }
-      },400)
-    })
-  //点击下载源文件
-/* $('.j-down').on('click',function(){
-    avoidReClick($('.j-down'))
-    $.ajax({
-      url: '/public/url/post/downSrc',
-      type: 'POST',
-      dataType: "json",
-      data: {},
-      success: function(res){
-        console.log('成功传过去了')
-        $('.j-down-msg').html('地图查看器地址下载成功！')
-        console.log(res)
-        resetClick($('.j-down'))
-      },
-      error:function(err){
-        console.log(err)
-      },
-      complete: function(res){
-        console.log(res)
-        console.log('完成')
-      }
-    })
-})*/
-  //批量地址解析
-  function addrChange(){
-    var data_info = []
-    var myGeo = new BMap.Geocoder();
-    var i = 0;
-    var time = setInterval(function(){
-      if(i < addrsArr.length){
-        addrsArr[i].point = getPoint(myGeo,addrsArr[i].search)
-        console.log(addrsArr)
-        i++
-      }else{
-        doInit = true
-      }
-    },400);
-  }
-  function getPoint(myGeo,search){
-    var _point = []
-    console.log(search)
-    myGeo.getPoint(search, function(point){
-      console.log(point)
-        if (point) {
-          _point.push(point.lng)
-          _point.push(point.lat)
-          
-        }else{
-          alert("您选择地址没有解析到结果!");
-        }
-      }, "杭州市");
-    return _point
-  }
- 
-
-  
-
-  function judgeTheSame(){
-    var output = []
-    var temp = []
-    temp.length = addrsArr.length
-    for(var i=0;i<addrsArr.length;i++){
-      var str = '<div>公司名称:'+addrsArr[i].show+'</div>'
-      temp[i] = str
-    }
-    for(var i=0;i<addrsArr.length;i++){
-      var _point = addrsArr[i].point
-      var add = temp[i]
-      for(var j=0;j<addrsArr.length;j++){
-        if(i!=j&&_point[0] == addrsArr[j].point[0]&&_point[1] == addrsArr[j].point[1]){
-          add += temp[j]
-        }
-      }
-      output.push(add)
-    }
-    return output
-  }
-    
      
   </script>
 </body>

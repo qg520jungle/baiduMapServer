@@ -87,6 +87,23 @@ app.get('/public/url/post/downSrc', function (req, res) {
       "MESSAGE":'地图查看器地址下载成功！'
     };
 });
+//下载模板
+app.get('/public/url/post/downMould', function (req, res) {
+  res.download('public/data/addrs_mould.xlsx','addrs.xlsx', function(err){
+  if (err) {
+    // Handle error, but keep in mind the response may be partially-sent
+    // so check res.headersSent
+    console.log(err)
+  } else {
+    // decrement a download credit, etc.
+    console.log('download success')
+  }
+});
+  return {
+      "RESULT":1,
+      "MESSAGE":'地图查看器地址下载成功！'
+    };
+});
 
 var server = app.listen(3000, function () {
   var host = server.address().address;

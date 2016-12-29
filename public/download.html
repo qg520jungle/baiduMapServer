@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="./css/common.css">
   <script src="./js/jquery-1.11.3.js"></script>
   <script src="./js/source.js"></script>
+  <script src="./js/common.js"></script>
   <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Di1FAQVUbVY6FvD6RIS5OdXwzmD5SFsL"></script>
     <!-- 加载百度地图样式信息窗口 -->
     <script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
@@ -28,12 +29,18 @@
   <div class="g-body">
     <div class="m-main-box">
       <div class="m-wrap">
-        <span class="u-btn j-init btn-bd2">初始化地址</span>
+        <span class="f-btn">
+          <span class="u-btn j-init btn-bd2">初始化地址</span>
+        </span>
         <div class="u-msg-box j-init-msg"></div>
       </div>
       <div class="m-wrap">
-        <a href="/public/url/post/downSrc" class="u-btn btn-bd2 j-down">下载源文件</a>
-        <a href="javascript:void(0);" class="u-btn btn-bd2 j-goMap">baiduMap</a>
+        <span class="f-btn">
+          <a href="/public/url/post/downSrc" class="u-btn btn-bd2 j-down">下载源文件</a>
+        </span>
+        <span class="f-btn">
+          <a href="javascript:void(0);" class="u-btn btn-bd2 j-goMap">baiduMap</a>
+        </span>
       </div>
       <div class="m-wrap ">
         <p class="s-info">说明: 点击 <a href="###">初始化地址</a> 按钮 获得成功的提示信息后</p>
@@ -57,39 +64,17 @@
     <p class="s-foot">bothqia@126.com 若有 <b>疑问</b> 或 <b>建议</b> 可与作者联系 </p>
   </div>
   <script>
-  //杜绝重复点击
-  function avoidReClick($this) {
-    var str = '';
-    str += '<div class="j-fade"></div>'
-    $this.parent().css({
-      'position' : 'relative'
+    $('.j-goMap').on('click',function(){
+      window.location.href= '/baiduMap.html'
     })
-    $this.after(str)
-    $this.next('.j-fade').css({
-      'position': 'absolute',
-      'zIndex': '10',
-      'width': $this.width()+12,
-      'height': $this.height()+8,
-      'top': '0',
-      'left': '0',
-      'background': 'rgba(0, 0, 0,.1)'
-    })
-  }
-  //恢复点击
-  function resetClick($this) {
-    $this.next('.j-fade').remove()
-  }
-$('.j-goMap').on('click',function(){
-  window.location.href= '/baiduMap.html'
-})
-
-
     var doInit = false;
+    //$('.j-init-msg').append('<img src="./img/_loading.gif" style="height: 29px;">'); 
     //初始化地址
     $('.j-init').on('click',function(){
-      avoidReClick($('.j-upload'))
+      avoidReClick($('.j-goMap'))
       avoidReClick($('.j-down'))
       avoidReClick($('.j-init'))
+      $('.j-init-msg').append('<img class="loading-img" src="./img/_loading.gif" style="height: 29px;">'); 
       doInit = false;
       addrChange()
       var loading = setInterval(function(){
@@ -105,9 +90,10 @@ $('.j-goMap').on('click',function(){
             data: {"DATA":str},
             success: function(res){
               console.log('成功传过去了')
+              $('.j-init-msg .loading-img').remove();
               $('.j-init-msg').html('地图查看器地址初始化成功！')
               console.log(res)
-              resetClick($('.j-upload'))
+              resetClick($('.j-goMap'))
               resetClick($('.j-init'))
               resetClick($('.j-down'))
             },
@@ -122,29 +108,6 @@ $('.j-goMap').on('click',function(){
         }
       },400)
     })
-  //点击下载源文件
-/* $('.j-down').on('click',function(){
-    avoidReClick($('.j-down'))
-    $.ajax({
-      url: '/public/url/post/downSrc',
-      type: 'POST',
-      dataType: "json",
-      data: {},
-      success: function(res){
-        console.log('成功传过去了')
-        $('.j-down-msg').html('地图查看器地址下载成功！')
-        console.log(res)
-        resetClick($('.j-down'))
-      },
-      error:function(err){
-        console.log(err)
-      },
-      complete: function(res){
-        console.log(res)
-        console.log('完成')
-      }
-    })
-})*/
   //批量地址解析
   function addrChange(){
     var data_info = []
@@ -175,10 +138,6 @@ $('.j-goMap').on('click',function(){
       }, "杭州市");
     return _point
   }
- 
-
-  
-
   function judgeTheSame(){
     var output = []
     var temp = []
@@ -198,9 +157,7 @@ $('.j-goMap').on('click',function(){
       output.push(add)
     }
     return output
-  }
-    
-     
+  } 
   </script>
 </body>
 </html>
