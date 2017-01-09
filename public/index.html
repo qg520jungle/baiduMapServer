@@ -23,6 +23,10 @@
   <div class="g-head">
       <div class="m-logo">
           <span class="s-logo">百度地图拓展应用</span>
+          <!-- <a href="/login" class="s-link">登录</a>
+          <a href="/signup" class="s-link">注册</a> -->
+          <span class="s-link j-login">登录</span>
+          <span class="s-link " data-toggle="modal" data-target="#loginModal">注册</span>
       </div>
       <div class="m-nav">
         <div class="m-crb">
@@ -60,7 +64,42 @@
     </p>
     <p class="s-foot">bothqia@126.com 若有 <b>疑问</b> 或 <b>建议</b> 可与作者联系 </p>
   </div>
+  
+  <!-- 注册登录 模态框 Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">注册</h4>
+      </div>
+      <div class="modal-body">
+        <dl>
+          <dt>
+            邮箱
+          </dt>
+          <dd>
+            <input type="text" class="j-s-host">
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            密码
+          </dt>
+          <dd>
+            <input type="password" class="j-s-psw">
+          </dd>
+        </dl>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary j-signup">注册</button>
+      </div>
+    </div>
+  </div>
+</div>
   <script>
+  //import Wilddog from 'wilddog'
   //上传文件 插件
     $("#xlsx-file").fileinput({
         uploadUrl: '/public/url/post/uploadxlsx', // you must set a valid URL here else you will get an error
@@ -105,6 +144,30 @@
       })
       
     })
+    //注册
+    $('.j-signup').on('click',function(){
+      var url = 'https://baidu-map.wilddogio.com/'
+        
+      $.ajax({
+        url:'/signup',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+          host: $('.j-s-host').val(),
+          psw: $('.j-s-psw').val()
+
+        },
+        success: function(res){
+          console.log(res)
+          if(res == 1){
+            console.log('注册成功')
+          }else if(res == 0){
+            console.log('注册失败')
+          }
+        }
+      })
+    })
+
      
   </script>
 </body>

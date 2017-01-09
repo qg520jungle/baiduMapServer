@@ -13,6 +13,8 @@ var express = require('express');
 var bodyParser = require('body-parser')
 
 var multer  = require('multer')
+
+var wilddog = require('wilddog')
 var upload = multer({ dest: './public/data/' })
 var type = upload.single('recfile')
 var fs = require("fs")
@@ -28,13 +30,35 @@ app.use(express.static('public'));
 router.all('/', function (req, res) {
     res.sendFile('index.html')
 });
-// router.get('/download.html', function(req, res) {
-//     res.redirect('download.html');
-// });
-//xlsx 文件导入 upload.single('avatar'), function (req, res, next) {
-  // req.file is the `avatar` file
-  // req.body will hold the text fields, if there were any
-//})
+ // var config = {
+ //    syncURL: "https://baidu-map.wilddogio.com"
+ //  };
+ //  wilddog.initializeApp(config);
+  var config = {
+  authDomain: "baidu-map.wilddog.com"
+};
+var a = wilddog.initializeApp(config);
+
+//用户注册
+app.post('/signup',function(req, res){
+  console.log('这里是注册')
+ 
+  var host = req.body.host
+  var psw = req.body.psw
+  console.log(host)
+  console.log(psw)
+ 
+  a.auth().createUserWithEmailAndPassword(host, psw).then(function(user){
+   // 获取用户
+   console.log(user);
+}).catch(function (error) {
+     // 错误处理
+     console.log(error);
+ });
+  
+})
+//用户登录
+
 app.post('/public/url/post/uploadxlsx',type, function (req, res,next) {
   console.log(req.file)
   //var temp = xlsx.xlsxFile(req.file)

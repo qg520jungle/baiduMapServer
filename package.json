@@ -18,10 +18,11 @@
     "less-plugin-clean-css": "^1.5.1"
   },
   "dependencies": {
-    "ejs": "^2.5.5",
-    "multer": "^1.2.1",
     "body-parser": "1.15.2",
+    "ejs": "^2.5.5",
     "express": "4.14.0",
-    "node-xlsx": "0.7.4"
+    "multer": "^1.2.1",
+    "node-xlsx": "0.7.4",
+    "wilddog": "^2.4.2"
   }
 }
