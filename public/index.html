@@ -19,14 +19,16 @@
     <!-- 加载城市列表 -->
     <script type="text/javascript" src="http://api.map.baidu.com/library/CityList/1.2/src/CityList_min.js"></script>
 </head>
-<body>
+<body class="f-pr">
   <div class="g-head">
-      <div class="m-logo">
+      <div class="m-logo f-cb">
           <span class="s-logo">百度地图拓展应用</span>
           <!-- <a href="/login" class="s-link">登录</a>
           <a href="/signup" class="s-link">注册</a> -->
-          <span class="s-link j-login">登录</span>
-          <span class="s-link " data-toggle="modal" data-target="#loginModal">注册</span>
+          <div class="m-login">
+            <span class="s-link j-host" >登录</span>
+            <span class="s-link j-host" >注册</span>
+          </div>
       </div>
       <div class="m-nav">
         <div class="m-crb">
@@ -54,6 +56,7 @@
     <div class="m-info">
       
     </div>
+    
   </div>
   <div class="g-foot">
     <p class="s-foot">By <b>Jungle</b></p>
@@ -64,40 +67,39 @@
     </p>
     <p class="s-foot">bothqia@126.com 若有 <b>疑问</b> 或 <b>建议</b> 可与作者联系 </p>
   </div>
-  
-  <!-- 注册登录 模态框 Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">注册</h4>
+  <div class="m-cover j-cover"></div>
+  <div class="m-user-block j-zone">
+    <div class="m-user-head j-h">
+      <span class="tt">注册 </span>
+      <span class="tips">———来自 qg 的 批量地址查询 应用</span>
+    </div>
+    <div class="m-user-body">
+      <dl class="u-dl">
+        <dt class="short">
+          用户名:
+        </dt>
+        <dd>
+          <input type="text" class="u-input u-input-borderb j-s-host" placeholder="请用可用邮箱注册">
+        </dd>
+      </dl>
+      <dl class="u-dl">
+        <dt class="short">
+          密码:
+        </dt>
+        <dd>
+          <input type="password" class="u-input u-input-borderb j-s-psw" placeholder="请设置密码">
+        </dd>
+      </dl>
+      <div class="m-user-tips">
+        
       </div>
-      <div class="modal-body">
-        <dl>
-          <dt>
-            邮箱
-          </dt>
-          <dd>
-            <input type="text" class="j-s-host">
-          </dd>
-        </dl>
-        <dl>
-          <dt>
-            密码
-          </dt>
-          <dd>
-            <input type="password" class="j-s-psw">
-          </dd>
-        </dl>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary j-signup">注册</button>
+      <div class="m-btn-box">
+        <span class="btn u-btn btn-full j-signup btn-warn">注册</span>
+        <span class="btn u-btn btn-link j-cancle">取消</span>
       </div>
     </div>
   </div>
-</div>
+  
   <script>
   //import Wilddog from 'wilddog'
   //上传文件 插件
