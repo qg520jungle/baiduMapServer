@@ -70,32 +70,66 @@
   <div class="m-cover j-cover"></div>
   <div class="m-user-block j-zone">
     <div class="m-user-head j-h">
-      <span class="tt">注册 </span>
-      <span class="tips">———来自 qg 的 批量地址查询 应用</span>
+      <!-- <span class="tt">注册 </span> -->
+      <span class="tips">来自 qg 的 批量地址查询 应用</span>
+    </div>
+    <div class="m-slider">
+      <div class="u-slider-raido">
+        <div class="u-slider-switch j-slider-switch">
+          <span class="tt j-slider-t" host-switch="signup">注册</span>
+        </div>
+      </div>
     </div>
     <div class="m-user-body">
-      <dl class="u-dl">
-        <dt class="short">
-          用户名:
-        </dt>
-        <dd>
-          <input type="text" class="u-input u-input-borderb j-s-host" placeholder="请用可用邮箱注册">
-        </dd>
-      </dl>
-      <dl class="u-dl">
-        <dt class="short">
-          密码:
-        </dt>
-        <dd>
-          <input type="password" class="u-input u-input-borderb j-s-psw" placeholder="请设置密码">
-        </dd>
-      </dl>
-      <div class="m-user-tips">
-        
+      <div class="m-user-body-item"  host-state="signup">
+        <dl class="u-dl">
+          <dt class="short">
+            用户名:
+          </dt>
+          <dd>
+            <input type="text" class="u-input u-input-borderb j-s-host" placeholder="请用可用邮箱注册">
+          </dd>
+        </dl>
+        <dl class="u-dl">
+          <dt class="short">
+            密码:
+          </dt>
+          <dd>
+            <input type="password" class="u-input u-input-borderb j-s-psw" placeholder="请设置密码">
+          </dd>
+        </dl>
+        <div class="m-user-tips">
+          
+        </div>
+        <div class="m-btn-box">
+          <span class="btn u-btn btn-full j-signup btn-warn">注册</span>
+          <span class="btn u-btn btn-link j-cancle">取消</span>
+        </div>
       </div>
-      <div class="m-btn-box">
-        <span class="btn u-btn btn-full j-signup btn-warn">注册</span>
-        <span class="btn u-btn btn-link j-cancle">取消</span>
+      <div class="m-user-body-item" host-state="login">
+        <dl class="u-dl">
+          <dt class="short">
+            用户名:
+          </dt>
+          <dd>
+            <input type="text" class="u-input u-input-borderb j-s-host" placeholder="请用可用邮箱注册">
+          </dd>
+        </dl>
+        <dl class="u-dl">
+          <dt class="short">
+            密码:
+          </dt>
+          <dd>
+            <input type="password" class="u-input u-input-borderb j-s-psw" placeholder="请设置密码">
+          </dd>
+        </dl>
+        <div class="m-user-tips">
+          
+        </div>
+        <div class="m-btn-box">
+          <span class="btn u-btn btn-full j-signup btn-warn">注册</span>
+          <span class="btn u-btn btn-link j-cancle">取消</span>
+        </div>
       </div>
     </div>
   </div>
@@ -169,8 +203,79 @@
         }
       })
     })
+    initLogin();
+    switchSlide();
+    //注册登录弹出
+    function initLogin(){
+      $('.j-host').off('click').on('click',function(){
+        $('.j-cover').show()
+        $('.j-zone').show().animate({
+          right:'0px'
+        },500,'swing',function(){
 
-     
+        })
+      })
+      $('.j-cancle,.j-cover').off('click').on('click',function(){
+        
+        $('.j-zone').animate({
+          right:'-360px'
+        },500,'swing',function(){
+          $('.j-cover').hide();
+          $('.j-zone').hide();
+        })
+      })
+     }
+     //注册登录 开关交互
+     function switchSlide(){
+      var w = ''
+      var isMove = false;
+      var cX = ''
+      $('.j-slider-t').off('mouseover').on('mouseover',function(){
+        w = switchWave()
+      })
+      $('.j-slider-t').off('mouseout').on('mouseout',function(){
+        clearSwitch(w)
+      })
+      $('.j-slider-t').off('mousedown').on('mousedown',function(){
+        $('.j-slider-t').off('mouseover')
+        isMove = true;
+        clearSwitch(w)
+      })
+      $('.j-slider-t').off('mousemove').on('mousemove',function(){
+        if(isMove){
+
+        }
+      })
+     }
+     function clearSwitch(w){
+        clearInterval(w)
+        $('.j-slider-switch').stop(true).css({
+          'width':'55px',
+          'padding-left':'10px'
+        })  
+     }
+     //按钮 蠢蠢欲动
+     function switchWave(){
+      var t=400
+      switchWaveIn(t)
+      var w = setInterval(function(){
+        switchWaveIn(t)
+      },t*2+2)
+      return w
+     }
+     function switchWaveIn(t){
+        $('.j-slider-switch').animate({
+          width:'63px'
+        },t,'swing',function(){
+          $('.j-slider-switch').animate({
+            width:'48px'
+          },t,'swing',function(){
+
+          })
+        })
+      
+     }
+
   </script>
 </body>
 </html>
