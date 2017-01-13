@@ -693,9 +693,13 @@ li {
   position: relative;
 }
 .m-user-block .m-user-body-item {
+  display: none;
   margin-left: 10px;
   margin-right: 5px;
   margin-top: 45px;
+}
+.m-user-block .m-user-body-item.z-act {
+  display: block;
 }
 .m-user-block .m-user-body-item .u-input-borderb {
   width: 250px;
@@ -717,30 +721,49 @@ li {
   margin-top: 10px;
 }
 .m-slider .u-slider-raido {
+  font-size: 0;
   display: block;
   margin: 0 auto;
   width: 250px;
   height: 36px;
-  border: 1px solid #ccc;
-  outline: 4px double #ccc;
+  border-bottom: 1px solid #ccc;
   position: relative;
-  background-color: #39c;
 }
 .m-slider .u-slider-switch {
-  position: absolute;
-  top: 4px;
-  left: 4px;
+  display: inline-block;
+  margin-top: 4px;
+  margin-left: 34px;
+  margin-right: 33px;
   width: 55px;
   height: 27px;
   line-height: 27px;
   border: 1px solid #ccc;
-  /*text-align: center;*/
-  padding-left: 10px;
+  text-align: center;
+  font-size: 0;
+  background-color: rgba(100, 100, 100, 0.5);
+  cursor: pointer;
+}
+.m-slider .u-slider-switch .tt {
+  font-size: 16px;
+  color: #fff;
+}
+.m-slider .u-slider-switch.z-act {
+  background-color: rgba(5, 11, 195, 0.8);
+}
+.m-slider .u-slider-switch2 {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 55px;
+  height: 27px;
+  line-height: 27px;
+  border: 1px solid #ccc;
+  text-align: center;
   font-size: 0;
   background-color: rgba(5, 11, 195, 0.4);
   cursor: pointer;
 }
-.m-slider .u-slider-switch .tt {
+.m-slider .u-slider-switch2 .tt2 {
   font-size: 16px;
   color: #fff;
 }

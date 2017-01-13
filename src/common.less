@@ -278,9 +278,13 @@ button {
     position: relative;
   }
   .m-user-body-item{
+    display:none;
     margin-left: 10px;
     margin-right: 5px;
     margin-top: 45px;
+    &.z-act{
+      display:block;
+    }
     .u-input-borderb{
       width: 250px;
       font-size: 14px;
@@ -302,33 +306,51 @@ button {
   margin: 5px;
   margin-top: 10px;
   .u-slider-raido{
+    font-size:0;
     display: block;
     margin: 0 auto;
     width: 250px;
     height: 36px;
-    border: 1px solid #ccc;
-    outline: 4px double #ccc;
+    border-bottom: 1px solid #ccc;
     position: relative;
-    background-color: #39c;
   }
   .u-slider-switch{
-    position: absolute;
-    top: 4px;
-    left: 4px;
+    display:inline-block;
+    margin-top: 4px;
+    margin-left: 34px;
+    margin-right: 33px;
     width: 55px;
     height: 27px;
     line-height: 27px;
     border: 1px solid #ccc;
-    /*text-align: center;*/
-    
-    padding-left: 10px;
+    text-align: center;
     font-size: 0;
-    background-color: rgba(5, 11, 195, 0.4);
+    background-color: rgba(100, 100, 100, 0.5);
     cursor: pointer;
     .tt{
       font-size: 16px;
       color: #fff;
 
+    }
+    &.z-act{
+      background-color: rgba(5, 11, 195, 0.8);
+    }
+  }
+  .u-slider-switch2{
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 55px;
+    height: 27px;
+    line-height: 27px;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 0;
+    background-color: rgba(5, 11, 195, 0.4);
+    cursor: pointer;
+    .tt2{
+      font-size: 16px;
+      color: #fff;
     }
   }
 

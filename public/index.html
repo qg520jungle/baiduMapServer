@@ -26,8 +26,8 @@
           <!-- <a href="/login" class="s-link">登录</a>
           <a href="/signup" class="s-link">注册</a> -->
           <div class="m-login">
-            <span class="s-link j-host" >登录</span>
-            <span class="s-link j-host" >注册</span>
+            <span class="s-link j-host" host-state="login">登录</span>
+            <span class="s-link j-host" host-state="signup">注册</span>
           </div>
       </div>
       <div class="m-nav">
@@ -75,13 +75,19 @@
     </div>
     <div class="m-slider">
       <div class="u-slider-raido">
-        <div class="u-slider-switch j-slider-switch">
-          <span class="tt j-slider-t" host-switch="signup">注册</span>
+        <div class="u-slider-switch z-act j-slider-switch" host-state="signup">
+          <span class="tt j-slider-t" >注册</span>
         </div>
+        <div class="u-slider-switch j-slider-switch" host-state="login">
+          <span class="tt j-slider-t">登陆</span>
+        </div>
+        <canvas id="login-switch" width="250" height="36" style="margin:0 auto">
+          请使用 chrome 谷歌浏览器 
+        </canvas>
       </div>
     </div>
     <div class="m-user-body">
-      <div class="m-user-body-item"  host-state="signup">
+      <div class="m-user-body-item j-slider-body"  host-state="signup">
         <dl class="u-dl">
           <dt class="short">
             用户名:
@@ -106,7 +112,7 @@
           <span class="btn u-btn btn-link j-cancle">取消</span>
         </div>
       </div>
-      <div class="m-user-body-item" host-state="login">
+      <div class="m-user-body-item j-slider-body" host-state="login">
         <dl class="u-dl">
           <dt class="short">
             用户名:
@@ -127,7 +133,7 @@
           
         </div>
         <div class="m-btn-box">
-          <span class="btn u-btn btn-full j-signup btn-warn">注册</span>
+          <span class="btn u-btn btn-full j-signup ">登陆</span>
           <span class="btn u-btn btn-link j-cancle">取消</span>
         </div>
       </div>
@@ -204,10 +210,15 @@
       })
     })
     initLogin();
-    switchSlide();
+    //switchSlide();
     //注册登录弹出
     function initLogin(){
       $('.j-host').off('click').on('click',function(){
+        var state = $(this).attr('host-state')
+        $('.j-slider-switch').removeClass('z-act')
+        $('.j-slider-switch[host-state="'+state+'"]').addClass('z-act')
+        $('.j-slider-body').removeClass('z-act')
+        $('.j-slider-body[host-state="'+state+'"]').addClass('z-act')
         $('.j-cover').show()
         $('.j-zone').show().animate({
           right:'0px'
@@ -225,56 +236,79 @@
         })
       })
      }
-     //注册登录 开关交互
-     function switchSlide(){
-      var w = ''
-      var isMove = false;
-      var cX = ''
-      $('.j-slider-t').off('mouseover').on('mouseover',function(){
-        w = switchWave()
-      })
-      $('.j-slider-t').off('mouseout').on('mouseout',function(){
-        clearSwitch(w)
-      })
-      $('.j-slider-t').off('mousedown').on('mousedown',function(){
-        $('.j-slider-t').off('mouseover')
-        isMove = true;
-        clearSwitch(w)
-      })
-      $('.j-slider-t').off('mousemove').on('mousemove',function(){
-        if(isMove){
+     $('.j-slider-switch').on('click',function(){
+      var state = $(this).attr('host-state');
+      $('.j-slider-switch').removeClass('z-act');
+      $(this).addClass('z-act')
+      $('.j-slider-body').removeClass('z-act')
+      $('.j-slider-body[host-state="'+state+'"]').addClass('z-act')
+     })
+     //注册登录 开关交互 用 canvas 实现
+     //canvas.getContext('2d');
+    var canvas = document.getElementById('login-switch');
+    var ctx = canvas.getContext('2d');
+     // function switchSlide(){
+     //  var w = ''
+     //  var isMove = false;
+     //  var cX = ''
+     //  $('.j-slider-t').off('mouseover').on('mouseover',function(){
+     //    w = switchWave()
+     //  })
+     //  $('.j-slider-t').off('mouseout').on('mouseout',function(){
+     //    clearSwitch(w)
+     //  })
+     //  $('.j-slider-t').off('mousedown').on('mousedown',function(e){
+     //    $('.j-slider-t').off('mouseover')
+     //    isMove = true;
+     //    var cX = parseInt(e.pageX)
+     //    console.log(cX)
+     //    clearSwitch(w)
+     //  })
+     //  $('.j-slider-t').off('mousemove').on('mousemove',function(e){
+     //    if(isMove){
+     //      var nowX = parseInt(e.pageX)
+     //      console.log(nowX)
+     //      $('.j-slider-switch').css({
+     //        'left': (4+nowX-cX)+'px'
+     //      })
+     //    }
+     //  })
+     //  $('.j-slider-t').off('mouseup').on('mousedown',function(){
+     //     $('.j-slider-t').off('mouseover').on('mouseover',function(){
+     //        w = switchWave()
+     //      })
+     //    isMove = false;
+     //   //clearSwitch(w)
+     //  })
+     // }
+     // function clearSwitch(w){
+     //    clearInterval(w)
+     //    $('.j-slider-switch').stop(true).css({
+     //      'width':'55px',
+     //      'padding-left':'10px'
+     //    })  
+     // }
+     // //按钮 蠢蠢欲动
+     // function switchWave(){
+     //  var t=400
+     //  switchWaveIn(t)
+     //  var w = setInterval(function(){
+     //    switchWaveIn(t)
+     //  },t*2+2)
+     //  return w
+     // }
+     // function switchWaveIn(t){
+     //    $('.j-slider-switch').animate({
+     //      width:'63px'
+     //    },t,'swing',function(){
+     //      $('.j-slider-switch').animate({
+     //        width:'48px'
+     //      },t,'swing',function(){
 
-        }
-      })
-     }
-     function clearSwitch(w){
-        clearInterval(w)
-        $('.j-slider-switch').stop(true).css({
-          'width':'55px',
-          'padding-left':'10px'
-        })  
-     }
-     //按钮 蠢蠢欲动
-     function switchWave(){
-      var t=400
-      switchWaveIn(t)
-      var w = setInterval(function(){
-        switchWaveIn(t)
-      },t*2+2)
-      return w
-     }
-     function switchWaveIn(t){
-        $('.j-slider-switch').animate({
-          width:'63px'
-        },t,'swing',function(){
-          $('.j-slider-switch').animate({
-            width:'48px'
-          },t,'swing',function(){
-
-          })
-        })
+     //      })
+     //    })
       
-     }
+     // }
 
   </script>
 </body>
