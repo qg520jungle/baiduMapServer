@@ -75,11 +75,11 @@
     </div>
     <div class="m-slider">
       <div class="u-slider-raido">
-        <div class="u-slider-switch z-act j-slider-switch" host-state="signup">
-          <span class="tt j-slider-t" >注册</span>
-        </div>
         <div class="u-slider-switch j-slider-switch" host-state="login">
           <span class="tt j-slider-t">登陆</span>
+        </div>
+        <div class="u-slider-switch z-act j-slider-switch" host-state="signup">
+          <span class="tt j-slider-t" >注册</span>
         </div>
         <canvas id="login-switch" width="250" height="36" style="margin:0 auto">
           请使用 chrome 谷歌浏览器 
@@ -104,6 +104,14 @@
             <input type="password" class="u-input u-input-borderb j-s-psw" placeholder="请设置密码">
           </dd>
         </dl>
+        <!-- <dl class="u-dl">
+          <dt class="short">
+            确认密码:
+          </dt>
+          <dd>
+            <input type="password" class="u-input u-input-borderb j-s-psw" placeholder="请重复输入">
+          </dd>
+        </dl> -->
         <div class="m-user-tips">
           
         </div>
@@ -118,7 +126,7 @@
             用户名:
           </dt>
           <dd>
-            <input type="text" class="u-input u-input-borderb j-s-host" placeholder="请用可用邮箱注册">
+            <input type="text" class="u-input u-input-borderb j-s-login-host" placeholder="请输入注册邮箱">
           </dd>
         </dl>
         <dl class="u-dl">
@@ -126,14 +134,14 @@
             密码:
           </dt>
           <dd>
-            <input type="password" class="u-input u-input-borderb j-s-psw" placeholder="请设置密码">
+            <input type="password" class="u-input u-input-borderb j-s-login-psw" placeholder="请设置密码">
           </dd>
         </dl>
         <div class="m-user-tips">
           
         </div>
         <div class="m-btn-box">
-          <span class="btn u-btn btn-full j-signup ">登陆</span>
+          <span class="btn u-btn btn-full j-login ">登陆</span>
           <span class="btn u-btn btn-link j-cancle">取消</span>
         </div>
       </div>
@@ -188,8 +196,6 @@
     })
     //注册
     $('.j-signup').on('click',function(){
-      var url = 'https://baidu-map.wilddogio.com/'
-        
       $.ajax({
         url:'/signup',
         type: 'POST',
@@ -209,8 +215,37 @@
         }
       })
     })
+    //登录
+    $('.j-login').on('click',function(){
+      $.ajax({
+        url:'/login',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+          host: $('.j-s-login-host').val(),
+          psw: $('.j-s-login-psw').val()
+
+        },
+        success: function(res){
+          console.log(res)
+          if(res == 1){
+            console.log('登录成功')
+            doLogin(res)
+          }else if(res == 0){
+            console.log('登录失败')
+          }
+        },
+        error: function(err){
+          console.log(err)
+        }
+      })
+    })
     initLogin();
     //switchSlide();
+    //登录之后
+    function doLogin(res){
+      console.log(res)
+    }
     //注册登录弹出
     function initLogin(){
       $('.j-host').off('click').on('click',function(){

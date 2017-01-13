@@ -51,6 +51,7 @@ app.post('/signup',function(req, res){
   a.auth().createUserWithEmailAndPassword(host, psw).then(function(user){
    // 获取用户
    console.log(user);
+   res.json(user)
 }).catch(function (error) {
      // 错误处理
      console.log(error);
@@ -58,6 +59,23 @@ app.post('/signup',function(req, res){
   
 })
 //用户登录
+app.post('/login',function(req, res){
+  console.log('这里是登录')
+ 
+  var host = req.body.host
+  var psw = req.body.psw
+  console.log(host)
+  console.log(psw)
+  a.auth().signInWithEmailAndPassword(host, psw).then(function(user){
+     console.log(user);
+     res.json(user)
+ }).catch(function (error) {
+     // 错误处理
+     res.json(error)
+     console.log(error)
+ });
+  
+})
 
 app.post('/public/url/post/uploadxlsx',type, function (req, res,next) {
   console.log(req.file)
